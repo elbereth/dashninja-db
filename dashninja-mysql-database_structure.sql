@@ -1,8 +1,20 @@
--- MySQL dump 10.13  Distrib 5.6.26, for Linux (x86_64)
 --
--- Host: localhost    Database: dash_mnninja
--- ------------------------------------------------------
--- Server version	5.6.26
+-- This file is part of Dash Ninja.
+-- https://github.com/elbereth/dashninja-db
+--
+-- Dash Ninja is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- Dash Ninja is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+--
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -100,7 +112,7 @@ CREATE TABLE `cmd_config` (
 --
 
 INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES
-(1);
+(2);
 
 --
 -- Table structure for table `cmd_hub`
@@ -222,6 +234,7 @@ CREATE TABLE `cmd_info_masternode2` (
   `MasternodeProtocol` int(11) NOT NULL,
   `MasternodePubkey` varchar(34) NOT NULL,
   `MasternodeIP` int(11) unsigned NOT NULL,
+  `MasternodeIPv6` varbinary(16) NOT NULL,
   `MasternodePort` smallint(5) unsigned NOT NULL,
   `MasternodeLastSeen` int(11) NOT NULL,
   `MasternodeActiveSeconds` int(11) NOT NULL,
@@ -485,7 +498,7 @@ DROP TABLE IF EXISTS `cmd_portcheck`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_portcheck` (
-  `NodeIP` int(10) unsigned NOT NULL,
+  `NodeIP` varbinary(16) NOT NULL,
   `NodePort` smallint(5) unsigned NOT NULL,
   `NodeTestNet` tinyint(1) NOT NULL,
   `NodePortCheck` set('unknown','open','closed','timeout','rogue') COLLATE utf8_bin NOT NULL DEFAULT 'unknown',
@@ -494,7 +507,7 @@ CREATE TABLE `cmd_portcheck` (
   `ErrorMessage` varchar(64) COLLATE utf8_bin NOT NULL,
   `NodeCountry` varchar(64) COLLATE utf8_bin NOT NULL,
   `NodeCountryCode` varchar(2) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`NodeIP`,`NodePort`,`NodeTestNet`),
+  PRIMARY KEY (`NodeIP`,`NodePort`,`NodeTestNet`) USING BTREE,
   KEY `NodePortCheck` (`NodePortCheck`),
   KEY `NextCheck` (`NextCheck`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=COMPRESSED;
@@ -586,7 +599,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -598,4 +611,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-30 20:40:12
+-- Dump completed on 2015-09-06 13:49:26
