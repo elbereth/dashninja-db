@@ -62,6 +62,31 @@ CREATE TABLE `cmd_budget` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `cmd_budget_final`
+--
+
+DROP TABLE IF EXISTS `cmd_budget_final`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cmd_budget_final` (
+  `BudgetTestnet` tinyint(1) NOT NULL,
+  `BudgetHash` varchar(64) CHARACTER SET ascii NOT NULL,
+  `FeeTx` varchar(64) CHARACTER SET ascii NOT NULL,
+  `BudgetName` varchar(64) CHARACTER SET ascii NOT NULL,
+  `BlockStart` int(11) NOT NULL,
+  `BlockEnd` int(11) NOT NULL,
+  `VoteCount` int(11) NOT NULL,
+  `Status` varchar(32) COLLATE ascii_bin NOT NULL,
+  `IsValid` tinyint(1) NOT NULL,
+  `IsValidReason` varchar(255) COLLATE ascii_bin NOT NULL,
+  `Proposals` varchar(255) COLLATE ascii_bin NOT NULL,
+  `FirstReported` datetime NOT NULL,
+  `LastReported` datetime NOT NULL,
+  PRIMARY KEY (`BudgetTestnet`,`BudgetHash`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `cmd_budget_projection`
 --
 
@@ -112,7 +137,7 @@ CREATE TABLE `cmd_config` (
 --
 
 INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES
-(2);
+(3);
 
 --
 -- Table structure for table `cmd_hub`
@@ -171,6 +196,8 @@ CREATE TABLE `cmd_info_blocks` (
   `BlockMNPayeeDonation` tinyint(1) NOT NULL DEFAULT '0',
   `BlockMNPayeeExpected` varchar(34) COLLATE ascii_bin NOT NULL,
   `BlockMNValueRatioExpected` decimal(10,8) NOT NULL,
+  `IsSuperblock` tinyint(1) NOT NULL DEFAULT '0',
+  `SuperBlockBudgetName` varchar(64) COLLATE ascii_bin NOT NULL,
   PRIMARY KEY (`BlockTestNet`,`BlockId`),
   KEY `BlockMNPayed` (`BlockMNPayed`),
   KEY `BlockMNProtocol` (`BlockMNProtocol`)
@@ -611,4 +638,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-06 13:49:26
+-- Dump completed on 2015-09-08  3:31:47
