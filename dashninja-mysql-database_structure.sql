@@ -13,7 +13,7 @@
 -- GNU General Public License for more details.
 --
 -- You should have received a copy of the GNU General Public License
--- along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+-- along with Dash Ninja.  If not, see <http://www.gnu.org/licenses/>.
 --
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -121,6 +121,27 @@ CREATE TABLE `cmd_budget_projection` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `cmd_budget_votes`
+--
+
+DROP TABLE IF EXISTS `cmd_budget_votes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cmd_budget_votes` (
+  `BudgetTestnet` tinyint(1) NOT NULL,
+  `BudgetId` varchar(64) NOT NULL,
+  `MasternodeOutputHash` varchar(64) NOT NULL,
+  `MasternodeOutputIndex` int(11) NOT NULL,
+  `VoteHash` varchar(64) CHARACTER SET armscii8 NOT NULL,
+  `VoteValue` set('YES','NO','ABSTAIN') NOT NULL,
+  `VoteTime` int(11) NOT NULL,
+  `VoteIsValid` tinyint(1) NOT NULL,
+  PRIMARY KEY (`BudgetTestnet`,`BudgetId`,`MasternodeOutputHash`,`MasternodeOutputIndex`),
+  KEY `VoteValue` (`VoteValue`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `cmd_config`
 --
 
@@ -137,7 +158,7 @@ CREATE TABLE `cmd_config` (
 --
 
 INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES
-(3);
+(4);
 
 --
 -- Table structure for table `cmd_hub`
@@ -638,4 +659,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-08  3:31:47
+-- Dump completed on 2015-09-21  0:51:58
