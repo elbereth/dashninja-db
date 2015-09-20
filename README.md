@@ -19,4 +19,4 @@ It contains:
 
 ## Update:
 * Check your database version from cmd_config
-* Use the each corresponding script to update from that version until you reach the last version
+* Use the each corresponding script in /update to update from that version until you reach the last version
