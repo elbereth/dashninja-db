@@ -16,3 +16,7 @@ It contains:
 
 ## Install:
 * Import database structure in your MySQL server
+
+## Update:
+* Check your database version from cmd_config
+* Use the each corresponding script to update from that version until you reach the last version
