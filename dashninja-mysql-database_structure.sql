@@ -62,6 +62,29 @@ CREATE TABLE `cmd_budget` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `cmd_budget_dashwhale_comments`
+--
+
+DROP TABLE IF EXISTS `cmd_budget_dashwhale_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cmd_budget_dashwhale_comments` (
+  `BudgetHash` varchar(64) CHARACTER SET ascii NOT NULL,
+  `CommentHash` varchar(32) CHARACTER SET ascii NOT NULL,
+  `CommentUsername` varchar(64) CHARACTER SET ascii NOT NULL,
+  `CommentDate` datetime NOT NULL,
+  `CommentOrder` int(11) NOT NULL,
+  `CommentLevel` int(11) NOT NULL,
+  `CommentRecentPost` tinyint(1) NOT NULL,
+  `CommentByOwner` tinyint(1) NOT NULL,
+  `CommentReplyURL` varchar(255) CHARACTER SET ascii NOT NULL,
+  `CommentContent` text COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`BudgetHash`,`CommentHash`),
+  KEY `CommentOrder` (`CommentOrder`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `cmd_budget_final`
 --
 
@@ -153,12 +176,7 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `cmd_config`
---
-
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES
-(4);
+INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES ('5');
 
 --
 -- Table structure for table `cmd_hub`
@@ -494,7 +512,7 @@ CREATE TABLE `cmd_nodes_status` (
   `NodeBlocks` int(11) NOT NULL,
   `NodeLastBlockHash` varchar(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `NodeConnections` int(11) NOT NULL,
-  `NodeIP` int(11) unsigned NOT NULL,
+  `NodeIP` int(11) unsigned DEFAULT NULL,
   `NodePort` smallint(5) unsigned NOT NULL,
   `NodeCountry` varchar(32) COLLATE utf8_bin NOT NULL,
   `NodeCountryCode` varchar(2) COLLATE utf8_bin NOT NULL,
@@ -647,7 +665,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -659,4 +677,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-21  0:51:58
+-- Dump completed on 2016-01-30 14:14:20
