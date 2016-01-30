@@ -45,6 +45,12 @@ ALTER TABLE `cmd_budget_votes`
   ADD PRIMARY KEY (`BudgetTestnet`,`BudgetId`,`MasternodeOutputHash`,`MasternodeOutputIndex`),
   ADD KEY `VoteValue` (`VoteValue`);
 
+--
+-- Update actual version number
+--
+
+UPDATE `cmd_config` SET `DataBaseVersion`=4 WHERE `DataBaseVersion`=3
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
