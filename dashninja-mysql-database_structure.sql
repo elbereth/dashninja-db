@@ -176,7 +176,7 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES ('5');
+INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES ('6');
 
 --
 -- Table structure for table `cmd_hub`
@@ -237,6 +237,8 @@ CREATE TABLE `cmd_info_blocks` (
   `BlockMNValueRatioExpected` decimal(10,8) NOT NULL,
   `IsSuperblock` tinyint(1) NOT NULL DEFAULT '0',
   `SuperBlockBudgetName` varchar(64) COLLATE ascii_bin NOT NULL,
+  `BlockDarkSendTXCount` int(11) NOT NULL DEFAULT '0',
+  `MemPoolDarkSendTXCount` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`BlockTestNet`,`BlockId`),
   KEY `BlockMNPayed` (`BlockMNPayed`),
   KEY `BlockMNProtocol` (`BlockMNProtocol`)
@@ -665,7 +667,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -677,4 +679,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-30 14:14:20
+-- Dump completed on 2016-05-14 18:10:33
