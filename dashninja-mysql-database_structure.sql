@@ -176,7 +176,7 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES ('6');
+INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES ('7');
 
 --
 -- Table structure for table `cmd_hub`
@@ -474,6 +474,7 @@ CREATE TABLE `cmd_nodes` (
   `NodeType` set('masternode','p2pool') COLLATE ascii_bin NOT NULL DEFAULT 'masternode',
   `VersionID` int(11) NOT NULL,
   `KeepUpToDate` tinyint(1) NOT NULL DEFAULT '0',
+  `KeepRunning` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`NodeID`),
   KEY `TestNet` (`NodeTestNet`,`VersionID`,`NodeEnabled`),
   KEY `VersionID` (`VersionID`),
@@ -667,7 +668,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -679,4 +680,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-14 18:10:33
+-- Dump completed on 2016-06-05 17:25:40
