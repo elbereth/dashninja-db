@@ -16,28 +16,16 @@
 -- along with Dash Ninja.  If not, see <http://www.gnu.org/licenses/>.
 --
 
--- Execute this MySQL script to update your Database from v6 to v7
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- Execute this MySQL script to update your Database from v7 to v8
 
 --
--- Table structure for table `cmd_info_blocks`
+-- Table structure for table `cmd_budget_final`
 --
 
-ALTER TABLE `cmd_nodes`
-  ADD `KeepRunning` INT NOT NULL DEFAULT '0'
-  AFTER `KeepUpToDate`;
+ALTER TABLE `cmd_budget_final` CHANGE `Proposals` `Proposals` TEXT CHARACTER SET ascii COLLATE ascii_bin NOT NULL;
 
 --
 -- Update actual version number
 --
 
-UPDATE `cmd_config` SET `DataBaseVersion`=7 WHERE `DataBaseVersion`=6
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
+UPDATE `cmd_config` SET `DataBaseVersion`=8 WHERE `DataBaseVersion`=7;

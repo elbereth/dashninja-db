@@ -102,7 +102,7 @@ CREATE TABLE `cmd_budget_final` (
   `Status` varchar(32) COLLATE ascii_bin NOT NULL,
   `IsValid` tinyint(1) NOT NULL,
   `IsValidReason` varchar(255) COLLATE ascii_bin NOT NULL,
-  `Proposals` varchar(255) COLLATE ascii_bin NOT NULL,
+  `Proposals` text COLLATE ascii_bin NOT NULL,
   `FirstReported` datetime NOT NULL,
   `LastReported` datetime NOT NULL,
   PRIMARY KEY (`BudgetTestnet`,`BudgetHash`)
@@ -176,7 +176,7 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES ('7');
+INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (8);
 
 --
 -- Table structure for table `cmd_hub`
@@ -668,7 +668,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -680,4 +680,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-05 17:25:40
+-- Dump completed on 2016-07-07 14:07:37
