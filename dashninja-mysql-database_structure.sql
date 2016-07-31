@@ -176,7 +176,7 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (8);
+INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (9);
 
 --
 -- Table structure for table `cmd_hub`
@@ -303,6 +303,7 @@ CREATE TABLE `cmd_info_masternode2` (
   `MasternodePubkey` varchar(34) NOT NULL,
   `MasternodeIP` int(11) unsigned NOT NULL,
   `MasternodeIPv6` varbinary(16) NOT NULL,
+  `MasternodeTor` varchar(16) NOT NULL,
   `MasternodePort` smallint(5) unsigned NOT NULL,
   `MasternodeLastSeen` int(11) NOT NULL,
   `MasternodeActiveSeconds` int(11) NOT NULL,
@@ -680,4 +681,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-07 14:07:37
+-- Dump completed on 2016-07-31 19:10:49
