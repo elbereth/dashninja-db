@@ -176,7 +176,7 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (9);
+INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (10);
 
 --
 -- Table structure for table `cmd_hub`
@@ -396,7 +396,7 @@ CREATE TABLE `cmd_info_masternode_list` (
   `NodeID` int(11) NOT NULL,
   `MasternodeStatus` set('active','inactive','unlisted','current') COLLATE ascii_bin NOT NULL,
   `MasternodeStatusPoS` tinyint(4) NOT NULL DEFAULT '0',
-  `MasternodeStatusEx` set('ENABLED','EXPIRED','VIN_SPENT','REMOVE','POS_ERROR','') COLLATE ascii_bin NOT NULL DEFAULT '',
+  `MasternodeStatusEx` set('ENABLED','EXPIRED','VIN_SPENT','REMOVE','POS_ERROR','','PRE_ENABLED') COLLATE ascii_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`MasternodeIP`,`MasternodePort`,`MNTestNet`,`NodeID`),
   KEY `MasternodeStatus` (`MasternodeStatus`),
   KEY `MNTestNet` (`MNTestNet`),
@@ -669,7 +669,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -681,4 +681,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-31 19:10:49
+-- Dump completed on 2016-10-02  1:40:07
