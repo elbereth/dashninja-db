@@ -176,7 +176,7 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (11);
+INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (12);
 
 --
 -- Table structure for table `cmd_gobject_proposals`
@@ -338,6 +338,8 @@ CREATE TABLE `cmd_info_blocks` (
   `SuperBlockBudgetName` varchar(64) COLLATE ascii_bin NOT NULL,
   `BlockDarkSendTXCount` int(11) NOT NULL DEFAULT '0',
   `MemPoolDarkSendTXCount` int(11) NOT NULL DEFAULT '0',
+  `SuperblockBudgetPayees` int(11) NOT NULL,
+  `SuperblockBudgetAmount` double NOT NULL,
   PRIMARY KEY (`BlockTestNet`,`BlockId`),
   KEY `BlockMNPayed` (`BlockMNPayed`),
   KEY `BlockMNProtocol` (`BlockMNProtocol`)
@@ -362,6 +364,23 @@ CREATE TABLE `cmd_info_blocks_history2` (
   PRIMARY KEY (`BlockHeight`,`BlockTestNet`,`NodeID`),
   KEY `Protocol` (`Protocol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin ROW_FORMAT=COMPRESSED;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cmd_info_blocks_superblockpayments`
+--
+
+DROP TABLE IF EXISTS `cmd_info_blocks_superblockpayments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cmd_info_blocks_superblockpayments` (
+  `BlockTestnet` tinyint(4) NOT NULL,
+  `BlockId` int(11) NOT NULL,
+  `GovernanceObjectPaymentAddress` varchar(34) NOT NULL,
+  `GovernanceObjectPaymentAmount` decimal(20,8) NOT NULL,
+  `GovernanceObjectPaymentProposalHash` varchar(64) NOT NULL,
+  PRIMARY KEY (`BlockTestnet`,`BlockId`,`GovernanceObjectPaymentProposalHash`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,7 +443,7 @@ CREATE TABLE `cmd_info_masternode2_list` (
   `MasternodeTestNet` tinyint(1) NOT NULL,
   `NodeID` int(11) NOT NULL,
   `MasternodeStatus` set('active','inactive','unlisted','current') COLLATE ascii_bin NOT NULL,
-  `MasternodeStatusEx` set('ENABLED','EXPIRED','VIN_SPENT','REMOVE','POS_ERROR','','PRE_ENABLED','WATCHDOG_EXPIRED','__UNKNOWN__') COLLATE ascii_bin NOT NULL DEFAULT '',
+  `MasternodeStatusEx` set('ENABLED','EXPIRED','VIN_SPENT','REMOVE','POS_ERROR','','PRE_ENABLED','WATCHDOG_EXPIRED','__UNKNOWN__','NEW_START_REQUIRED','UPDATE_REQUIRED') COLLATE ascii_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`MasternodeOutputHash`,`MasternodeOutputIndex`,`MasternodeTestNet`,`NodeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -768,7 +787,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -780,4 +799,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-09 13:52:56
+-- Dump completed on 2017-03-06  2:06:04
