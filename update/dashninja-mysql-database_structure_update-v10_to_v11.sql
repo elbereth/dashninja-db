@@ -16,7 +16,7 @@
 -- along with Dash Ninja.  If not, see <http://www.gnu.org/licenses/>.
 --
 
--- Execute this MySQL script to update your Database from v9 to v10
+-- Execute this MySQL script to update your Database from v10 to v11
 
 --
 -- Table structure for table `cmd_info_masternode2_list`
