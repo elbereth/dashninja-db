@@ -138,7 +138,7 @@ CREATE TABLE `cmd_budget_projection` (
   `IsValidReason` varchar(255) NOT NULL,
   `fValid` tinyint(1) NOT NULL,
   `FirstReported` datetime NOT NULL,
-  `LastReported` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LastReported` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`BudgetTestnet`,`BudgetHash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -172,11 +172,11 @@ DROP TABLE IF EXISTS `cmd_config`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_config` (
-  `DataBaseVersion` int(11) NOT NULL
+  `ConfigKey` varchar(32) COLLATE ascii_bin NOT NULL,
+  `ConfigValue` varchar(128) COLLATE ascii_bin NOT NULL,
+  PRIMARY KEY (`ConfigKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-INSERT INTO `cmd_config` (`DataBaseVersion`) VALUES (12);
 
 --
 -- Table structure for table `cmd_gobject_proposals`
@@ -306,9 +306,7 @@ CREATE TABLE `cmd_hub_nodes` (
   `HubID` int(11) NOT NULL,
   `NodeID` int(11) NOT NULL,
   PRIMARY KEY (`HubID`,`NodeID`),
-  KEY `NodeID` (`NodeID`),
-  CONSTRAINT `cmd_hub_nodes_ibfk_1` FOREIGN KEY (`HubID`) REFERENCES `cmd_hub` (`HubID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `cmd_hub_nodes_ibfk_2` FOREIGN KEY (`NodeID`) REFERENCES `cmd_nodes` (`NodeID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `NodeID` (`NodeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin COMMENT='Link between Hub and Node';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -320,24 +318,24 @@ DROP TABLE IF EXISTS `cmd_info_blocks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_info_blocks` (
-  `BlockTestNet` tinyint(1) NOT NULL DEFAULT '0',
+  `BlockTestNet` tinyint(1) NOT NULL DEFAULT 0,
   `BlockId` int(11) NOT NULL,
   `BlockHash` varchar(64) COLLATE ascii_bin NOT NULL,
   `BlockMNPayee` varchar(34) COLLATE ascii_bin NOT NULL,
   `BlockMNValue` float NOT NULL,
   `BlockSupplyValue` float NOT NULL,
-  `BlockMNPayed` tinyint(1) NOT NULL DEFAULT '0',
+  `BlockMNPayed` tinyint(1) NOT NULL DEFAULT 0,
   `BlockPoolPubKey` varchar(34) COLLATE ascii_bin NOT NULL,
   `BlockMNProtocol` int(11) NOT NULL,
   `BlockTime` bigint(20) NOT NULL,
   `BlockDifficulty` float NOT NULL,
-  `BlockMNPayeeDonation` tinyint(1) NOT NULL DEFAULT '0',
+  `BlockMNPayeeDonation` tinyint(1) NOT NULL DEFAULT 0,
   `BlockMNPayeeExpected` varchar(34) COLLATE ascii_bin NOT NULL,
   `BlockMNValueRatioExpected` decimal(10,8) NOT NULL,
-  `IsSuperblock` tinyint(1) NOT NULL DEFAULT '0',
+  `IsSuperblock` tinyint(1) NOT NULL DEFAULT 0,
   `SuperBlockBudgetName` varchar(64) COLLATE ascii_bin NOT NULL,
-  `BlockDarkSendTXCount` int(11) NOT NULL DEFAULT '0',
-  `MemPoolDarkSendTXCount` int(11) NOT NULL DEFAULT '0',
+  `BlockDarkSendTXCount` int(11) NOT NULL DEFAULT 0,
+  `MemPoolDarkSendTXCount` int(11) NOT NULL DEFAULT 0,
   `SuperblockBudgetPayees` int(11) NOT NULL,
   `SuperblockBudgetAmount` double NOT NULL,
   PRIMARY KEY (`BlockTestNet`,`BlockId`),
@@ -358,7 +356,7 @@ CREATE TABLE `cmd_info_blocks_history2` (
   `BlockTestNet` tinyint(1) NOT NULL,
   `NodeID` int(11) NOT NULL,
   `BlockMNPayee` varchar(34) COLLATE ascii_bin NOT NULL,
-  `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `Protocol` int(11) NOT NULL,
   `BlockMNRatio` decimal(10,8) NOT NULL,
   PRIMARY KEY (`BlockHeight`,`BlockTestNet`,`NodeID`),
@@ -399,7 +397,7 @@ CREATE TABLE `cmd_info_masternode` (
   `MNLastSeen` bigint(20) NOT NULL,
   `MNCountry` varchar(64) COLLATE utf8_bin NOT NULL,
   `MNCountryCode` varchar(2) COLLATE utf8_bin NOT NULL,
-  `MNLastReported` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `MNLastReported` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`MasternodeIP`,`MasternodePort`,`MNTestNet`),
   KEY `MNTestNet` (`MNTestNet`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -414,9 +412,9 @@ DROP TABLE IF EXISTS `cmd_info_masternode2`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_info_masternode2` (
   `MasternodeOutputHash` varchar(64) NOT NULL,
-  `MasternodeOutputIndex` int(11) NOT NULL DEFAULT '0',
+  `MasternodeOutputIndex` int(11) NOT NULL DEFAULT 0,
   `MasternodeTestNet` tinyint(1) NOT NULL,
-  `MasternodeListed` tinyint(1) NOT NULL DEFAULT '1',
+  `MasternodeListed` tinyint(1) NOT NULL DEFAULT 1,
   `MasternodeProtocol` int(11) NOT NULL,
   `MasternodePubkey` varchar(34) NOT NULL,
   `MasternodeIP` int(11) unsigned NOT NULL,
@@ -439,7 +437,7 @@ DROP TABLE IF EXISTS `cmd_info_masternode2_list`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_info_masternode2_list` (
   `MasternodeOutputHash` varchar(64) COLLATE ascii_bin NOT NULL,
-  `MasternodeOutputIndex` int(11) NOT NULL DEFAULT '0',
+  `MasternodeOutputIndex` int(11) NOT NULL DEFAULT 0,
   `MasternodeTestNet` tinyint(1) NOT NULL,
   `NodeID` int(11) NOT NULL,
   `MasternodeStatus` set('active','inactive','unlisted','current') COLLATE ascii_bin NOT NULL,
@@ -456,10 +454,10 @@ DROP TABLE IF EXISTS `cmd_info_masternode_balance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_info_masternode_balance` (
-  `TestNet` tinyint(1) NOT NULL DEFAULT '0',
+  `TestNet` tinyint(1) NOT NULL DEFAULT 0,
   `PubKey` varchar(34) COLLATE ascii_bin NOT NULL,
   `Balance` decimal(20,9) NOT NULL,
-  `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`TestNet`,`PubKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin ROW_FORMAT=COMPRESSED;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -476,8 +474,8 @@ CREATE TABLE `cmd_info_masternode_donation` (
   `MasternodePort` smallint(5) unsigned NOT NULL,
   `MNTestNet` tinyint(1) NOT NULL,
   `MNPubKey` varchar(34) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  `MNDonationPercentage` tinyint(4) NOT NULL DEFAULT '0',
-  `MNLastReported` tinyint(1) NOT NULL DEFAULT '0',
+  `MNDonationPercentage` tinyint(4) NOT NULL DEFAULT 0,
+  `MNLastReported` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`MasternodeIP`,`MasternodePort`,`MNTestNet`,`MNPubKey`),
   KEY `MNTestNet` (`MNTestNet`),
   KEY `MasternodeIP` (`MasternodeIP`,`MasternodePort`,`MNTestNet`),
@@ -513,14 +511,13 @@ CREATE TABLE `cmd_info_masternode_list` (
   `MNTestNet` tinyint(1) NOT NULL,
   `NodeID` int(11) NOT NULL,
   `MasternodeStatus` set('active','inactive','unlisted','current') COLLATE ascii_bin NOT NULL,
-  `MasternodeStatusPoS` tinyint(4) NOT NULL DEFAULT '0',
+  `MasternodeStatusPoS` tinyint(4) NOT NULL DEFAULT 0,
   `MasternodeStatusEx` set('ENABLED','EXPIRED','VIN_SPENT','REMOVE','POS_ERROR','','PRE_ENABLED','WATCHDOG_EXPIRED') COLLATE ascii_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`MasternodeIP`,`MasternodePort`,`MNTestNet`,`NodeID`),
   KEY `MasternodeStatus` (`MasternodeStatus`),
   KEY `MNTestNet` (`MNTestNet`),
   KEY `NodeID` (`NodeID`),
-  KEY `MasternodeStatusPoS` (`MasternodeStatusPoS`),
-  CONSTRAINT `cmd_info_masternode_list_ibfk_1` FOREIGN KEY (`NodeID`) REFERENCES `cmd_nodes` (`NodeID`)
+  KEY `MasternodeStatusPoS` (`MasternodeStatusPoS`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -536,7 +533,7 @@ CREATE TABLE `cmd_info_masternode_pubkeys` (
   `MasternodePort` smallint(5) unsigned NOT NULL,
   `MNTestNet` tinyint(1) NOT NULL,
   `MNPubKey` varchar(34) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  `MNLastReported` tinyint(1) NOT NULL DEFAULT '0',
+  `MNLastReported` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`MasternodeIP`,`MasternodePort`,`MNTestNet`,`MNPubKey`),
   KEY `MNTestNet` (`MNTestNet`),
   KEY `MasternodeIP` (`MasternodeIP`,`MasternodePort`,`MNTestNet`),
@@ -592,13 +589,12 @@ CREATE TABLE `cmd_nodes` (
   `NodeEnabled` tinyint(1) NOT NULL,
   `NodeType` set('masternode','p2pool') COLLATE ascii_bin NOT NULL DEFAULT 'masternode',
   `VersionID` int(11) NOT NULL,
-  `KeepUpToDate` tinyint(1) NOT NULL DEFAULT '0',
-  `KeepRunning` tinyint(4) NOT NULL DEFAULT '0',
+  `KeepUpToDate` tinyint(1) NOT NULL DEFAULT 0,
+  `KeepRunning` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`NodeID`),
   KEY `TestNet` (`NodeTestNet`,`VersionID`,`NodeEnabled`),
   KEY `VersionID` (`VersionID`),
-  KEY `NodeType` (`NodeType`),
-  CONSTRAINT `cmd_nodes_ibfk_1` FOREIGN KEY (`VersionID`) REFERENCES `cmd_versions` (`VersionId`)
+  KEY `NodeType` (`NodeType`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -612,7 +608,7 @@ DROP TABLE IF EXISTS `cmd_nodes_spork`;
 CREATE TABLE `cmd_nodes_spork` (
   `NodeID` int(11) NOT NULL,
   `SporkName` varchar(128) COLLATE ascii_bin NOT NULL,
-  `SporkValue` int(11) NOT NULL,
+  `SporkValue` bigint(20) NOT NULL,
   PRIMARY KEY (`NodeID`,`SporkName`),
   KEY `NodeID` (`NodeID`),
   KEY `SporkName` (`SporkName`)
@@ -634,11 +630,9 @@ CREATE TABLE `cmd_nodes_status` (
   `NodeBlocks` int(11) NOT NULL,
   `NodeLastBlockHash` varchar(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `NodeConnections` int(11) NOT NULL,
-  `NodeIP` int(11) unsigned DEFAULT NULL,
-  `NodePort` smallint(5) unsigned NOT NULL,
   `NodeCountry` varchar(32) COLLATE utf8_bin NOT NULL,
   `NodeCountryCode` varchar(2) COLLATE utf8_bin NOT NULL,
-  `LastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `LastUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`NodeId`),
   KEY `NodeProcessStatus` (`NodeProcessStatus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -671,7 +665,7 @@ DROP TABLE IF EXISTS `cmd_pools_pubkey`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_pools_pubkey` (
-  `PoolTestNet` tinyint(1) NOT NULL DEFAULT '0',
+  `PoolTestNet` tinyint(1) NOT NULL DEFAULT 0,
   `PoolPubKey` varchar(64) COLLATE ascii_bin NOT NULL,
   `PoolDescription` varchar(32) COLLATE ascii_bin NOT NULL,
   PRIMARY KEY (`PoolPubKey`,`PoolTestNet`)
@@ -690,7 +684,7 @@ CREATE TABLE `cmd_portcheck` (
   `NodePort` smallint(5) unsigned NOT NULL,
   `NodeTestNet` tinyint(1) NOT NULL,
   `NodePortCheck` set('unknown','open','closed','timeout','rogue') COLLATE utf8_bin NOT NULL DEFAULT 'unknown',
-  `NextCheck` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `NextCheck` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `NodeSubVer` varchar(64) COLLATE utf8_bin NOT NULL,
   `ErrorMessage` varchar(64) COLLATE utf8_bin NOT NULL,
   `NodeCountry` varchar(64) COLLATE utf8_bin NOT NULL,
@@ -727,7 +721,7 @@ DROP TABLE IF EXISTS `cmd_stats_history`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cmd_stats_history` (
   `TestNet` tinyint(1) NOT NULL,
-  `StatDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `StatDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `ActiveMNCount` int(11) NOT NULL,
   `NetworkHashPerSec` bigint(20) NOT NULL,
   `PriceUSD` decimal(30,10) NOT NULL,
@@ -785,9 +779,9 @@ CREATE TABLE `cmd_versions` (
   `VersionURL` varchar(255) COLLATE ascii_bin NOT NULL,
   `VersionSHA1` varchar(40) COLLATE ascii_bin NOT NULL,
   `VersionSize` int(11) NOT NULL,
-  `VersionHandling` tinyint(4) NOT NULL DEFAULT '0',
+  `VersionHandling` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -799,4 +793,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-06  2:06:04
+-- Dump completed on 2017-10-28 21:34:46
