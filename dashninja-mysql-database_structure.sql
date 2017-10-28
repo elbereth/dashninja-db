@@ -178,6 +178,9 @@ CREATE TABLE `cmd_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `cmd_config` (`ConfigKey`, `ConfigValue`) VALUES
+('DataBaseVersion', '13');
+
 --
 -- Table structure for table `cmd_gobject_proposals`
 --
