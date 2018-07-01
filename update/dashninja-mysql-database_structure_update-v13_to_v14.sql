@@ -16,7 +16,7 @@
 -- along with Dash Ninja.  If not, see <http://www.gnu.org/licenses/>.
 --
 
--- Execute this MySQL script to update your Database from v12 to v13
+-- Execute this MySQL script to update your Database from v13 to v14
 
 --
 -- Update blocks table to add block version info
