@@ -16,7 +16,7 @@
 -- along with Dash Ninja.  If not, see <http://www.gnu.org/licenses/>.
 --
 
--- Execute this MySQL script to update your Database from v12 to v13
+-- Execute this MySQL script to update your Database from v14 to v15
 
 --
 -- Update masternode list statusex for new POSE_BAN status

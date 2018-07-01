@@ -16,7 +16,7 @@
 -- along with Dash Ninja.  If not, see <http://www.gnu.org/licenses/>.
 --
 
--- Execute this MySQL script to update your Database from v12 to v13
+-- Execute this MySQL script to update your Database from v15 to v16
 
 --
 -- Update masternode2 list statusex for new statuses
@@ -29,3 +29,10 @@ ALTER TABLE `cmd_info_masternode2_list` CHANGE `MasternodeStatusEx` `MasternodeS
 --
 
 ALTER TABLE `cmd_info_masternode2` ADD `MasternodeLastPaidBlock` INT NOT NULL DEFAULT '0' AFTER `MasternodeLastPaid`, ADD `MasternodeDaemonVersion` VARCHAR(32) NOT NULL DEFAULT '' AFTER `MasternodeLastPaidBlock`, ADD `MasternodeSentinelVersion` VARCHAR(32) NOT NULL DEFAULT '' AFTER `MasternodeDaemonVersion`, ADD `MasternodeSentinelState` ENUM('current','expired') NOT NULL DEFAULT 'expired' AFTER `MasternodeSentinelVersion`;
+
+--
+-- Update database version in config table
+--
+
+UPDATE `cmd_config` SET `ConfigValue` = '16' WHERE `cmd_config`.`ConfigKey` = 'DataBaseVersion';
+
