@@ -19,7 +19,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -179,7 +179,7 @@ CREATE TABLE `cmd_config` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 INSERT INTO `cmd_config` (`ConfigKey`, `ConfigValue`) VALUES
-('DataBaseVersion', '16');
+('DataBaseVersion', '17');
 
 --
 -- Table structure for table `cmd_gobject_proposals`
@@ -295,7 +295,7 @@ CREATE TABLE `cmd_hub` (
   `HubDescription` varchar(64) COLLATE ascii_bin NOT NULL,
   PRIMARY KEY (`HubID`),
   KEY `HubEnabled` (`HubEnabled`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=ascii COLLATE=ascii_bin COMMENT='List of Hubs (Servers)';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=ascii COLLATE=ascii_bin COMMENT='List of Hubs (Servers)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -431,7 +431,7 @@ CREATE TABLE `cmd_info_masternode2` (
   `MasternodeLastPaidBlock` int(11) NOT NULL DEFAULT 0,
   `MasternodeDaemonVersion` varchar(32) NOT NULL DEFAULT '',
   `MasternodeSentinelVersion` varchar(32) NOT NULL DEFAULT '',
-  `MasternodeSentinelState` enum('current','expired') NOT NULL DEFAULT 'expired',
+  `MasternodeSentinelState` enum('current','expired','') NOT NULL DEFAULT 'expired',
   PRIMARY KEY (`MasternodeOutputHash`,`MasternodeOutputIndex`,`MasternodeTestNet`),
   KEY `MasternodePubkey` (`MasternodePubkey`),
   KEY `MasternodeIP` (`MasternodeIP`,`MasternodePort`),
@@ -747,6 +747,58 @@ CREATE TABLE `cmd_portcheck_config` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `cmd_protx`
+--
+
+DROP TABLE IF EXISTS `cmd_protx`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cmd_protx` (
+  `proTxTestNet` tinyint(4) NOT NULL,
+  `proTxHash` varchar(64) NOT NULL,
+  `collateralHash` varchar(64) NOT NULL,
+  `collateralIndex` int(11) NOT NULL,
+  `operatorReward` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `confirmations` int(11) NOT NULL,
+  `LastSeen` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`proTxTestNet`,`proTxHash`),
+  KEY `collateralHash` (`collateralHash`,`collateralIndex`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cmd_protx_state`
+--
+
+DROP TABLE IF EXISTS `cmd_protx_state`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cmd_protx_state` (
+  `proTxTestNet` tinyint(4) NOT NULL,
+  `proTxHash` varchar(64) NOT NULL,
+  `NodeID` int(11) NOT NULL,
+  `registeredHeight` int(11) NOT NULL,
+  `lastPaidHeight` int(11) NOT NULL,
+  `PoSePenalty` int(11) NOT NULL,
+  `PoSeRevivedHeight` int(11) NOT NULL,
+  `PoSeBanHeight` int(11) NOT NULL,
+  `revocationReason` int(11) NOT NULL,
+  `keyIDOwner` varchar(40) NOT NULL,
+  `pubKeyOperator` varchar(96) NOT NULL,
+  `keyIDVoting` varchar(40) NOT NULL,
+  `addrIP` varbinary(16) NOT NULL,
+  `addrPort` smallint(5) unsigned NOT NULL,
+  `payoutAddress` varchar(34) NOT NULL,
+  `operatorRewardAddress` varchar(34) NOT NULL,
+  `StateDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`proTxTestNet`,`proTxHash`,`NodeID`),
+  KEY `addrIP` (`addrIP`,`addrPort`),
+  KEY `payoutAddress` (`payoutAddress`),
+  KEY `operatorRewardAddress` (`operatorRewardAddress`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `cmd_stats_history`
 --
 
@@ -815,7 +867,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -827,4 +879,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-01 15:37:12
+-- Dump completed on 2019-03-27 19:55:27
