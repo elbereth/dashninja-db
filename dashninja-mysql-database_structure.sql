@@ -179,7 +179,7 @@ CREATE TABLE `cmd_config` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 INSERT INTO `cmd_config` (`ConfigKey`, `ConfigValue`) VALUES
-('DataBaseVersion', '17');
+('DataBaseVersion', '19');
 
 --
 -- Table structure for table `cmd_gobject_proposals`
@@ -273,7 +273,7 @@ CREATE TABLE `cmd_gobject_votes` (
   `MasternodeOutputHash` varchar(64) NOT NULL,
   `MasternodeOutputIndex` int(11) NOT NULL,
   `VoteHash` varchar(64) CHARACTER SET armscii8 NOT NULL,
-  `VoteValue` set('YES','NO','ABSTAIN') NOT NULL,
+  `VoteValue` set('YES','NO','ABSTAIN','NONE') NOT NULL,
   `VoteTime` int(11) NOT NULL,
   PRIMARY KEY (`GovernanceObjectTestnet`,`GovernanceObjectId`,`MasternodeOutputHash`,`MasternodeOutputIndex`),
   KEY `VoteValue` (`VoteValue`)
@@ -454,7 +454,7 @@ CREATE TABLE `cmd_info_masternode2_list` (
   `MasternodeTestNet` tinyint(1) NOT NULL,
   `NodeID` int(11) NOT NULL,
   `MasternodeStatus` set('active','inactive','unlisted','current') COLLATE ascii_bin NOT NULL,
-  `MasternodeStatusEx` set('ENABLED','EXPIRED','VIN_SPENT','REMOVE','POS_ERROR','','PRE_ENABLED','WATCHDOG_EXPIRED','__UNKNOWN__','NEW_START_REQUIRED','UPDATE_REQUIRED','POSE_BAN','OUTPOINT_SPENT','SENTINEL_PING_EXPIRED') COLLATE ascii_bin NOT NULL DEFAULT '',
+  `MasternodeStatusEx` set('ENABLED','EXPIRED','VIN_SPENT','REMOVE','POS_ERROR','','PRE_ENABLED','WATCHDOG_EXPIRED','__UNKNOWN__','NEW_START_REQUIRED','UPDATE_REQUIRED','POSE_BAN','OUTPOINT_SPENT','SENTINEL_PING_EXPIRED','POSE_BANNED') COLLATE ascii_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`MasternodeOutputHash`,`MasternodeOutputIndex`,`MasternodeTestNet`,`NodeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -867,7 +867,7 @@ CREATE TABLE `cmd_versions` (
   `VersionSize` int(11) NOT NULL,
   `VersionHandling` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`VersionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -879,4 +879,4 @@ CREATE TABLE `cmd_versions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-27 19:55:27
+-- Dump completed on 2021-01-17 15:44:46
